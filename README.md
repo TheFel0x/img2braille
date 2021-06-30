@@ -2,6 +2,8 @@
  TODO:
     - make this look nicer
 -->
+Turns an Image into Braille Art. (Unicode Art / "ASCII Art" (its not rly ascii...))
+
 ### how it works:
 - divide image into 2x4 blocks
 - calculate block value by adding [dot values](#dot-values) to `0x2800`
