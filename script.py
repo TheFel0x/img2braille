@@ -18,6 +18,9 @@ off_y = (img.size[1]%4)
 if off_x + off_y > 0:
     img = img.resize((img.size[0]+off_x,img.size[1]+off_y))
 
+# TODO:
+#   - add dithering?
+
 def get_dot_value(pos):
     # TODO:
     #   - add more ways of getting dot value
