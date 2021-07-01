@@ -5,16 +5,17 @@ parser = argparse.ArgumentParser()
 parser.add_argument("input",type=str,help="image file")
 parser.add_argument("-w","--width",type=int,help="output width in chars")
 parser.add_argument("--noinvert",action='store_true',help="don't invert colors (for bright backrounds with dark text)")
-
-# TODO:
-#parser.add_argument("--dither",action='store_true',help="activate dithering")
-#parser.add_argument("-c","--calculation",type=str,choices=["RGBsum"],help="determines the way in which dot values are calculated")
+# TODO: make this do something
+parser.add_argument("--dither",action='store_true',help="activate dithering")
+# TODO: add more calculation options
+parser.add_argument("-c","--calculation",type=str,choices=["RGBsum"],help="determines the way in which dot values are calculated")
 
 args = parser.parse_args()
 
 imgpath = args.input
 new_width = args.width if not args.width == None else 200
 inverted = not args.noinvert if not args.noinvert == None else True 
+algorythm = args.calculation if not args.calculation == None else "RGBsum"
 
 img = Image.open(imgpath)
 img = img.resize((new_width,round((new_width*img.size[1])/img.size[0])))
@@ -25,17 +26,18 @@ off_y = (img.size[1]%4)
 if off_x + off_y > 0:
     img = img.resize((img.size[0]+off_x,img.size[1]+off_y))
 
-# TODO:
-#   - add dithering?
+# TODO: add dithering?
 
 def get_dot_value(pos):
-    # TODO:
-    #   - add more ways of getting dot value
-    px = img.getpixel(pos)
-    if px[0]+px[1]+px[2] < 382.5:
-        return not inverted
+    if algorythm == "RGBsum":
+        px = img.getpixel(pos)
+        if px[0]+px[1]+px[2] < 382.5:
+            return not inverted
+        else:
+            return inverted
     else:
-        return inverted
+        # TODO: add more ways of getting dot value
+        pass
 
 def block_from_cursor(pos):
     block_val = 0x2800
