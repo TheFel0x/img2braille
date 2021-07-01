@@ -6,15 +6,16 @@ parser.add_argument("input",type=str,help="image file")
 parser.add_argument("-w","--width",type=int,help="output width in chars")
 parser.add_argument("--noinvert",action='store_true',help="don't invert colors (for bright backrounds with dark text)")
 # TODO: make this do something
-parser.add_argument("--dither",action='store_true',help="activate dithering")
+parser.add_argument("-d","--dither",action='store_true',help="use dithering")
 # TODO: add more calculation options
-parser.add_argument("-c","--calculation",type=str,choices=["RGBsum"],help="determines the way in which dot values are calculated")
+parser.add_argument("-c","--calculation",type=str,choices=["RGBsum","R","G","B"],help="determines the way in which dot values are calculated")
 
 args = parser.parse_args()
 
 imgpath = args.input
 new_width = args.width if not args.width == None else 200
 inverted = not args.noinvert if not args.noinvert == None else True 
+dither = args.dither if not args.dither == None else False
 algorythm = args.calculation if not args.calculation == None else "RGBsum"
 
 img = Image.open(imgpath)
@@ -32,6 +33,24 @@ def get_dot_value(pos):
     if algorythm == "RGBsum":
         px = img.getpixel(pos)
         if px[0]+px[1]+px[2] < 382.5:
+            return not inverted
+        else:
+            return inverted
+    elif algorythm == "R":
+        px = img.getpixel(pos)
+        if px[0] < 127.5:
+            return not inverted
+        else:
+            return inverted    
+    elif algorythm == "G":
+        px = img.getpixel(pos)
+        if px[1] < 127.5:
+            return not inverted
+        else:
+            return inverted
+    elif algorythm == "B":
+        px = img.getpixel(pos)
+        if px[2] < 127.5:
             return not inverted
         else:
             return inverted
