@@ -1,13 +1,20 @@
 from PIL import Image
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("input",type=str,help="image file")
+parser.add_argument("-w","--width",type=int,help="output width in chars")
+parser.add_argument("--noinvert",action='store_true',help="don't invert colors (for bright backrounds with dark text)")
 
 # TODO:
-#   - take these as input from user
-#
-# v v v v v v v v v v v v v v v v v v
-imgpath = 'test.png'
-new_width = 200
-inverted = True
-# ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+#parser.add_argument("--dither",action='store_true',help="activate dithering")
+#parser.add_argument("-c","--calculation",type=str,choices=["RGBsum"],help="determines the way in which dot values are calculated")
+
+args = parser.parse_args()
+
+imgpath = args.input
+new_width = args.width if not args.width == None else 200
+inverted = not args.noinvert if not args.noinvert == None else True 
 
 img = Image.open(imgpath)
 img = img.resize((new_width,round((new_width*img.size[1])/img.size[0])))
