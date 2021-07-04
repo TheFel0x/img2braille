@@ -8,6 +8,7 @@ parser.add_argument("--noinvert",action='store_true',help="don't invert colors (
 parser.add_argument("-d","--dither",action='store_true',help="use dithering")
 # TODO: add more calculation options
 parser.add_argument("-c","--calculation",type=str,choices=["RGBsum","R","G","B","BW"],help="determines the way in which dot values are calculated")
+parser.add_argument("--noempty",action='store_true',help='don\'t use U+2800 "Braille pattern dots-0"')
 
 args = parser.parse_args()
 
@@ -16,6 +17,7 @@ new_width = args.width if not args.width == None else 200
 inverted = not args.noinvert if not args.noinvert == None else True 
 dither = args.dither if not args.dither == None else False
 algorythm = args.calculation if not args.calculation == None else "RGBsum"
+noempty = args.noempty if not args.noempty == None else False
 
 img = Image.open(imgpath)
 img = img.resize((new_width,round((new_width*img.size[1])/img.size[0])))
@@ -93,6 +95,8 @@ def block_from_cursor(pos):
         block_val = block_val + 0x0040
     if get_dot_value((pos[0]+1,pos[1]+3)):
         block_val = block_val + 0x0080
+    if noempty and block_val == 0x2800:
+        block_val = 0x2801
     return chr(block_val)
 
 def iterate_image():
