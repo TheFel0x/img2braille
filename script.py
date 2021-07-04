@@ -31,13 +31,13 @@ if off_x + off_y > 0:
 if dither:
     if not algorythm == "RGBsum" or algorythm == "BW":
         if algorythm == "R":
-            # adjust image to red values
+            # TODO: adjust image to red values
             pass
         elif algorythm == "G":
-            # adjust image to green values
+            # TODO: adjust image to green values
             pass
         elif algorythm == "B":
-            # adjust image to blue values
+            # TODO: adjust image to blue values
             pass
     img = img.convert("1")
     algorythm = "BW"
@@ -72,7 +72,7 @@ def get_dot_value(pos):
         if px < 127.5:
             return not inverted
         else:
-            return inverted    
+            return inverted   
     else:
         # TODO: add more ways of getting dot value
         pass
