@@ -13,11 +13,11 @@ parser.add_argument("--noempty",action='store_true',help='don\'t use U+2800 "Bra
 args = parser.parse_args()
 
 imgpath = args.input
-new_width = args.width if not args.width == None else 200
+new_width = args.width if not args.width is None else 200
 inverted = not args.noinvert if not args.noinvert == None else True 
-dither = args.dither if not args.dither == None else False
-algorythm = args.calculation if not args.calculation == None else "RGBsum"
-noempty = args.noempty if not args.noempty == None else False
+dither = args.dither if not args.dither is None else False
+algorythm = args.calculation if not args.calculation is None else "RGBsum"
+noempty = args.noempty if not args.noempty is None else False
 
 img = Image.open(imgpath)
 img = img.resize((new_width,round((new_width*img.size[1])/img.size[0])))
@@ -28,17 +28,21 @@ off_y = (img.size[1]%4)
 if off_x + off_y > 0:
     img = img.resize((img.size[0]+off_x,img.size[1]+off_y))
 
+def adjust_to_color(img, pos):
+    for y in range(img.size[0]):
+        for x in range(img.size[1]):
+            val = img.getpixel((x,y))[pos]
+            img.putpixel((x,y),(val,val,val))
+    return img
+
 if dither:
-    if not algorythm == "RGBsum" or algorythm == "BW":
+    if algorythm != "RGBsum" or algorythm == "BW":
         if algorythm == "R":
-            # TODO: adjust image to red values
-            pass
+            img = adjust_to_color(img,0)
         elif algorythm == "G":
-            # TODO: adjust image to green values
-            pass
+            img = adjust_to_color(img,1)
         elif algorythm == "B":
-            # TODO: adjust image to blue values
-            pass
+            img = adjust_to_color(img,2)
     img = img.convert("1")
     algorythm = "BW"
 
