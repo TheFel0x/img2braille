@@ -52,31 +52,26 @@ def get_dot_value(pos):
         if px[0]+px[1]+px[2] < 382.5:
             return not inverted
         return inverted
-    
     elif algorythm == "R":
         px = img.getpixel(pos)
         if px[0] < 127.5:
             return not inverted  
         return inverted    
-
     elif algorythm == "G":
         px = img.getpixel(pos)
         if px[1] < 127.5:
             return not inverted
         return inverted
-    
     elif algorythm == "B":
         px = img.getpixel(pos)
         if px[2] < 127.5:
             return not inverted
         return inverted
-    
     elif algorythm == "BW":
         px = img.getpixel(pos)
         if px < 127.5:
             return not inverted
         return inverted   
-    
     else:
         # TODO: add more ways of getting dot value
         pass
