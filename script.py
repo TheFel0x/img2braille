@@ -13,11 +13,11 @@ parser.add_argument("--noempty",action='store_true',help='don\'t use U+2800 "Bra
 args = parser.parse_args()
 
 imgpath = args.input
-new_width = args.width if not args.width is None else 200
-inverted = not args.noinvert if not args.noinvert == None else True 
-dither = args.dither if not args.dither is None else False
-algorythm = args.calculation if not args.calculation is None else "RGBsum"
-noempty = args.noempty if not args.noempty is None else False
+new_width = args.width if args.width is not None else 200
+inverted = not args.noinvert if args.noinvert is not None else True 
+dither = args.dither if args.dither is not None else False
+algorythm = args.calculation if args.calculation is not None else "RGBsum"
+noempty = args.noempty if args.noempty is not None else False
 
 img = Image.open(imgpath)
 img = img.resize((new_width,round((new_width*img.size[1])/img.size[0])))
@@ -51,32 +51,32 @@ def get_dot_value(pos):
         px = img.getpixel(pos)
         if px[0]+px[1]+px[2] < 382.5:
             return not inverted
-        else:
-            return inverted
+        return inverted
+    
     elif algorythm == "R":
         px = img.getpixel(pos)
         if px[0] < 127.5:
-            return not inverted
-        else:
-            return inverted    
+            return not inverted  
+        return inverted    
+
     elif algorythm == "G":
         px = img.getpixel(pos)
         if px[1] < 127.5:
             return not inverted
-        else:
-            return inverted
+        return inverted
+    
     elif algorythm == "B":
         px = img.getpixel(pos)
         if px[2] < 127.5:
             return not inverted
-        else:
-            return inverted
+        return inverted
+    
     elif algorythm == "BW":
         px = img.getpixel(pos)
         if px < 127.5:
             return not inverted
-        else:
-            return inverted   
+        return inverted   
+    
     else:
         # TODO: add more ways of getting dot value
         pass
