@@ -3,12 +3,12 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("input",type=str,help="image file")
-parser.add_argument("-w","--width",type=int,help="output width in chars")
+parser.add_argument("-w","--width",type=int,help="determines output width in number of chars")
 parser.add_argument("--noinvert",action='store_true',help="don't invert colors (for bright backrounds with dark text)")
-parser.add_argument("-d","--dither",action='store_true',help="use dithering")
+parser.add_argument("-d","--dither",action='store_true',help="use dithering (recommended)")
 # TODO: add more calculation options
-parser.add_argument("-c","--calculation",type=str,choices=["RGBsum","R","G","B","BW"],help="determines the way in which dot values are calculated")
-parser.add_argument("--noempty",action='store_true',help='don\'t use U+2800 "Braille pattern dots-0"')
+parser.add_argument("-c","--calculation",type=str,choices=["RGBsum","R","G","B","BW"],help="determines the way in which dot values (on/off) are calculated")
+parser.add_argument("--noempty",action='store_true',help='don\'t use U+2800 "Braille pattern dots-0" (can fix spacing problems))')
 
 args = parser.parse_args()
 
