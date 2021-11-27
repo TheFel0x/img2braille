@@ -9,18 +9,15 @@ parser.add_argument("-d","--dither",action='store_true',help="use dithering (rec
 # TODO: add more calculation options
 parser.add_argument("-c","--calculation",type=str,choices=["RGBsum","R","G","B","BW"],help="determines the way in which dot values (on/off) are calculated")
 parser.add_argument("--noempty",action='store_true',help='don\'t use U+2800 "Braille pattern dots-0" (can fix spacing problems))')
-
-parser.add_argument("--color",type=str,choices=["none","ansi","html"],help="determines the way in which dot values (on/off) are calculated")
+parser.add_argument("--color",type=str,choices=["none","ansi","html", "htmlbg", "htmlall"],help="adds color for html or ansi ascaped output")
 
 args = parser.parse_args()
-
 imgpath = args.input
 new_width = args.width if args.width is not None else 200
 inverted = not args.noinvert if args.noinvert is not None else True 
 dither = args.dither if args.dither is not None else False
 algorythm = args.calculation if args.calculation is not None else "RGBsum"
 noempty = args.noempty if args.noempty is not None else False
-
 colorstyle = args.color if args.color is not None else "none"
 
 img = Image.open(imgpath)
@@ -32,14 +29,14 @@ off_y = (img.size[1]%4)
 if off_x + off_y > 0:
     img = img.resize((img.size[0]+off_x,img.size[1]+off_y))
 
+original_img = img.copy()
+
 def adjust_to_color(img, pos):
     for y in range(img.size[0]):
         for x in range(img.size[1]):
             val = img.getpixel((x,y))[pos]
             img.putpixel((x,y),(val,val,val))
     return img
-
-original_img = img.copy()
 
 if dither:
     if algorythm != "RGBsum" or algorythm == "BW":
@@ -110,6 +107,10 @@ def color_average_at_cursor(pos):
         return "\x1b[48;2;{};{};{}m".format(px[0],px[1],px[2])
     elif colorstyle == "html":
         return "<font color=\"#{:02x}{:02x}{:02x}\">".format(px[0],px[1],px[2])
+    elif colorstyle == "htmlbg":
+        return "<font style=\"background-color:#{:02x}{:02x}{:02x}\">".format(px[0],px[1],px[2])
+    elif colorstyle == "htmlall":
+        return "<font style=\"color:#{:02x}{:02x}{:02x};background-color:#{:02x}{:02x}{:02x}\">".format(px[0],px[1],px[2],px[0],px[1],px[2])
     else:
         return ""
 
@@ -126,14 +127,14 @@ def iterate_image():
 
             line = line + color_average_at_cursor((x_pos,y_pos))
             line = line + block_from_cursor((x_pos,y_pos))
-            if colorstyle == "html":
+            if colorstyle == "html" or colorstyle == "htmlbg":
                 line = line + "</font>"
 
             x_pos = x_pos + 2
         if colorstyle == "ansi":
             line = line + "\x1b[0m"
         print(line)
-        if colorstyle == "html":
+        if colorstyle == "html" or colorstyle == "htmlbg" or colorstyle == "htmlall":
             print("</br>")
         line = ''
         y_pos = y_pos + 4
