@@ -32,8 +32,8 @@ if off_x + off_y > 0:
 original_img = img.copy()
 
 def adjust_to_color(img, pos):
-    for y in range(img.size[0]):
-        for x in range(img.size[1]):
+    for y in range(img.size[1]):
+        for x in range(img.size[0]):
             val = img.getpixel((x,y))[pos]
             img.putpixel((x,y),(val,val,val))
     return img
