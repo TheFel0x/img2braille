@@ -10,6 +10,8 @@ parser.add_argument("-d","--dither",action='store_true',help="use dithering (rec
 parser.add_argument("-c","--calculation",type=str,choices=["RGBsum","R","G","B","BW"],help="determines the way in which dot values (on/off) are calculated")
 parser.add_argument("--noempty",action='store_true',help='don\'t use U+2800 "Braille pattern dots-0" (can fix spacing problems))')
 
+parser.add_argument("--color",type=str,choices=["none","ansi","html"],help="determines the way in which dot values (on/off) are calculated")
+
 args = parser.parse_args()
 
 imgpath = args.input
@@ -18,6 +20,8 @@ inverted = not args.noinvert if args.noinvert is not None else True
 dither = args.dither if args.dither is not None else False
 algorythm = args.calculation if args.calculation is not None else "RGBsum"
 noempty = args.noempty if args.noempty is not None else False
+
+colorstyle = args.color if args.color is not None else "none"
 
 img = Image.open(imgpath)
 img = img.resize((new_width,round((new_width*img.size[1])/img.size[0])))
@@ -34,6 +38,8 @@ def adjust_to_color(img, pos):
             val = img.getpixel((x,y))[pos]
             img.putpixel((x,y),(val,val,val))
     return img
+
+original_img = img.copy()
 
 if dither:
     if algorythm != "RGBsum" or algorythm == "BW":
@@ -98,6 +104,15 @@ def block_from_cursor(pos):
         block_val = 0x2801
     return chr(block_val)
 
+def color_average_at_cursor(pos):
+    px = original_img.getpixel(pos)
+    if colorstyle == "ansi":
+        return "\x1b[48;2;{};{};{}m".format(px[0],px[1],px[2])
+    elif colorstyle == "html":
+        return "<font color=\"#{:02x}{:02x}{:02x}\">".format(px[0],px[1],px[2])
+    else:
+        return ""
+
 def iterate_image():
     y_size = img.size[1]
     x_size = img.size[0]
@@ -107,9 +122,19 @@ def iterate_image():
     while y_pos < y_size-3:
         x_pos = 0
         while x_pos < x_size:
+            
+
+            line = line + color_average_at_cursor((x_pos,y_pos))
             line = line + block_from_cursor((x_pos,y_pos))
+            if colorstyle == "html":
+                line = line + "</font>"
+
             x_pos = x_pos + 2
+        if colorstyle == "ansi":
+            line = line + "\x1b[0m"
         print(line)
+        if colorstyle == "html":
+            print("</br>")
         line = ''
         y_pos = y_pos + 4
 
