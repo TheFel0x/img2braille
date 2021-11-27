@@ -12,7 +12,7 @@ Turns an Image into Braille Art. (Unicode Art / "ASCII Art" (its not rly ascii..
 | `-d` `--dither` | - | activates dithering |
 | `-c` `--calculation` | `RGBsum` `R` `G` `B` `BW` | determines the way in which is checked wether a dot is black or white |
 | `--noempty` | - | don\'t use U+2800 "Braille pattern dots-0" |
-| `--color` | `none` `ansi` `html` | color support for either HTML style with font tags or ANSi escaped for cli use (html also puts br tags at the end of each line) |
+| `--color` | `none` `ansi` `html` `htmlbg` `htmlall` | color support for either HTML style with font tags or ANSi escaped for cli use (html also puts br tags at the end of each line) htmlbg colors the background instead of the characters and all colors both |
 
 ## Examples
 `python script.py 'lain.png' --color ansi --dither --noempty`
