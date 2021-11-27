@@ -14,6 +14,9 @@ Turns an Image into Braille Art. (Unicode Art / "ASCII Art" (its not rly ascii..
 | `--color` | `none` `ansi` `html` | color support for either HTML style with font tags or ANSi escaped for cli use (html also puts br tags at the end of each line) |
 
 ## Examples
+`python script.py 'lain.png' --color ansi --dither --noempty`
+![image](https://user-images.githubusercontent.com/43345523/143688036-d10ab9b1-4b15-46ac-8796-b80644034d43.png)
+
 `python script.py 'lain.png' --dither`
 ![dither-braille](https://user-images.githubusercontent.com/43345523/124508661-af5d5e80-ddd0-11eb-82cc-256bace864df.png)
 
