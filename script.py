@@ -9,7 +9,7 @@ parser.add_argument("-d","--dither",action='store_true',help="use dithering (rec
 # TODO: add more calculation options
 parser.add_argument("-c","--calculation",type=str,choices=["RGBsum","R","G","B","BW"],help="determines the way in which dot values (on/off) are calculated")
 parser.add_argument("--noempty",action='store_true',help='don\'t use U+2800 "Braille pattern dots-0" (can fix spacing problems))')
-parser.add_argument("--color",type=str,choices=["none","ansi","html", "htmlbg", "htmlall"],help="adds color for html or ansi ascaped output")
+parser.add_argument("--color",type=str,choices=["none","ansi","ansifg","ansiall","html", "htmlbg", "htmlall"],help="adds color for html or ansi ascaped output")
 
 args = parser.parse_args()
 imgpath = args.input
@@ -105,6 +105,10 @@ def color_average_at_cursor(pos):
     px = original_img.getpixel(pos)
     if colorstyle == "ansi":
         return "\x1b[48;2;{};{};{}m".format(px[0],px[1],px[2])
+    elif colorstyle == "ansifg":
+        return "\x1b[38;2;{};{};{}m".format(px[0],px[1],px[2])
+    elif colorstyle == "ansiall":
+        return "\x1b[38;2;{};{};{};48;2;{};{};{}m".format(px[0],px[1],px[2],px[0],px[1],px[2])
     elif colorstyle == "html":
         return "<font color=\"#{:02x}{:02x}{:02x}\">".format(px[0],px[1],px[2])
     elif colorstyle == "htmlbg":
@@ -131,7 +135,7 @@ def iterate_image():
                 line = line + "</font>"
 
             x_pos = x_pos + 2
-        if colorstyle == "ansi":
+        if colorstyle == "ansi" or colorstyle == "ansifg" or colorstyle == "ansiall":
             line = line + "\x1b[0m"
         print(line)
         if colorstyle == "html" or colorstyle == "htmlbg" or colorstyle == "htmlall":
