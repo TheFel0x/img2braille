@@ -10,6 +10,8 @@ parser.add_argument("-d","--dither",action='store_true',help="use dithering (rec
 parser.add_argument("-c","--calculation",type=str,choices=["RGBsum","R","G","B","BW"],help="determines the way in which dot values (on/off) are calculated")
 parser.add_argument("--noempty",action='store_true',help='don\'t use U+2800 "Braille pattern dots-0" (can fix spacing problems))')
 parser.add_argument("--color",type=str,choices=["none","ansi","ansifg","ansiall","html", "htmlbg", "htmlall"],help="adds color for html or ansi ascaped output")
+parser.add_argument("--autocontrast",action='store_true',help="automatically adjusts contrast for the image")
+
 
 args = parser.parse_args()
 imgpath = args.input
@@ -19,6 +21,7 @@ dither = args.dither if args.dither is not None else False
 algorythm = args.calculation if args.calculation is not None else "RGBsum"
 noempty = args.noempty if args.noempty is not None else False
 colorstyle = args.color if args.color is not None else "none"
+autocontrast = args.autocontrast if args.autocontrast is not None else False
 
 img = Image.open(imgpath)
 img = img.resize((new_width,round((new_width*img.size[1])/img.size[0])))
@@ -49,30 +52,61 @@ if dither:
     img = img.convert("1")
     algorythm = "BW"
 
+if autocontrast:
+    average = 0
+    for y in range(img.size[1]):
+        for x in range(img.size[0]):
+            if algorythm == "RGBsum":
+                average += img.getpixel((x,y))[0]+img.getpixel((x,y))[1]+img.getpixel((x,y))[2]
+            elif algorythm == "R":
+                average = img.getpixel((x,y))[0]
+            elif algorythm == "G":
+                average = img.getpixel((x,y))[1]
+            elif algorythm == "B":
+                average = img.getpixel((x,y))[2]
+            elif algorythm == "BW":
+                average = img.getpixel((x,y))
+            else:
+                average += img.getpixel((x,y))[0]+img.getpixel((x,y))[1]+img.getpixel((x,y))[2]
+    average = average/(img.size[0]*img.size[1])
+else:
+    if algorythm == "RGBsum":
+        average = 382.5
+    elif algorythm == "R":
+        average = 127.5
+    elif algorythm == "G":
+        average = 127.5
+    elif algorythm == "B":
+        average = 127.5
+    elif algorythm == "BW":
+        average = 127.5
+    else:
+        average = 382.5
+
 def get_dot_value(pos):
     if algorythm == "RGBsum":
         px = img.getpixel(pos)
-        if px[0]+px[1]+px[2] < 382.5:
+        if px[0]+px[1]+px[2] < average:
             return not inverted
         return inverted
     elif algorythm == "R":
         px = img.getpixel(pos)
-        if px[0] < 127.5:
+        if px[0] < average:
             return not inverted  
         return inverted    
     elif algorythm == "G":
         px = img.getpixel(pos)
-        if px[1] < 127.5:
+        if px[1] < average:
             return not inverted
         return inverted
     elif algorythm == "B":
         px = img.getpixel(pos)
-        if px[2] < 127.5:
+        if px[2] < average:
             return not inverted
         return inverted
     elif algorythm == "BW":
         px = img.getpixel(pos)
-        if px < 127.5:
+        if px < average:
             return not inverted
         return inverted   
     else:
