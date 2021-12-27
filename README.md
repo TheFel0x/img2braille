@@ -43,5 +43,5 @@ Turns an Image into Braille Art. (Unicode Art / "ASCII Art" (its not rly ascii..
 For calculating which braille symbol represents a 2x4 pixel block.
 
 ## TODO:
-- meybe edge detection filter?
+- maybe edge detection filter?
 - maybe IRC color option?
