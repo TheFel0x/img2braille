@@ -10,7 +10,7 @@ parser.add_argument("-d","--dither",action='store_true',help="use dithering (rec
 parser.add_argument("-c","--calculation",type=str,choices=["RGBsum","R","G","B","BW"],help="determines the way in which dot values (on/off) are calculated")
 parser.add_argument("--noempty",action='store_true',help='don\'t use U+2800 "Braille pattern dots-0" (can fix spacing problems))')
 parser.add_argument("--color",type=str,choices=["none","ansi","ansifg","ansiall","html", "htmlbg", "htmlall"],help="adds color for html or ansi ascaped output")
-parser.add_argument("--autocontrast",action='store_true',help="automatically adjusts contrast for the image")
+parser.add_argument("-a","--autocontrast",action='store_true',help="automatically adjusts contrast for the image")
 
 
 args = parser.parse_args()
