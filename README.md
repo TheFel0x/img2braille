@@ -46,3 +46,5 @@ For calculating which braille symbol represents a 2x4 pixel block.
 ## TODO:
 - maybe edge detection filter?
 - maybe IRC color option?
+- color-only mode? (only full braille)
+- color palette support? maybe using https://github.com/hbldh/hitherdither ?
