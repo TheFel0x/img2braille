@@ -14,6 +14,7 @@ Turns an Image into Braille Art. (Unicode Art / "ASCII Art" (its not rly ascii..
 | `-n` `--noempty` | - | don\'t use U+2800 "Braille pattern dots-0" |
 | `-c` `--color` | `none` `ansi` `html` `htmlbg` `htmlall` | color support for either HTML style with font tags or ANSI escaped for cli use (html also puts br tags at the end of each line) htmlbg colors the background instead of the characters and all colors both |
 | `-a` `--autocontrast` | - | enables autocontrast, to automatically adjust black and white values for calculations to the images max/min (recommended for black/white use) |
+| `-b` `--blank` | - | all braille blocks are "full" blocks, in case you only care about the color output and not about the braille pattern | 
 
 ## Examples
 `python script.py 'lain.png' --color ansi --dither --noempty`
