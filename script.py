@@ -22,15 +22,6 @@ noempty = args.noempty if args.noempty is not None else False
 colorstyle = args.color if args.color is not None else "none"
 autocontrast = args.autocontrast if args.autocontrast is not None else False
 
-# Image Initialization
-img = Image.open(imgpath)
-img = img.resize((new_width,round((new_width*img.size[1])/img.size[0])))
-off_x = (img.size[0]%2)
-off_y = (img.size[1]%4)
-if off_x + off_y > 0:
-    img = img.resize((img.size[0]+off_x,img.size[1]+off_y))
-original_img = img.copy()
-
 # Adjustment To Color Calculation
 # Takes an image and returns a new image with the same size
 # The new image only uses either the R, G or B values of the original image
@@ -138,7 +129,7 @@ def iterate_image(img,original_img,dither,autocontrast,noempty,colorstyle):
     average = calc_average(img, algorythm, autocontrast)
     if dither:
         img = img.convert("1")
-        img = img.convert("RGB")
+    img = img.convert("RGB")
 
     y_size = img.size[1]
     x_size = img.size[0]
@@ -161,6 +152,15 @@ def iterate_image(img,original_img,dither,autocontrast,noempty,colorstyle):
             print("</br>")
         line = ''
         y_pos = y_pos + 4
+
+# Image Initialization
+img = Image.open(imgpath)
+img = img.resize((new_width,round((new_width*img.size[1])/img.size[0])))
+off_x = (img.size[0]%2)
+off_y = (img.size[1]%4)
+if off_x + off_y > 0:
+    img = img.resize((img.size[0]+off_x,img.size[1]+off_y))
+original_img = img.copy()
 
 # Get your output!
 iterate_image(img,original_img,dither,autocontrast,noempty,colorstyle)
