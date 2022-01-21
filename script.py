@@ -133,7 +133,7 @@ def color_average_at_cursor(original_img,pos,colorstyle):
         return ""
 
 # Iterates over the image and does all the stuff
-def iterate_image(img,dither,autocontrast,noempty,colorstyle):
+def iterate_image(img,original_img,dither,autocontrast,noempty,colorstyle):
     img = apply_algo(img,algorythm)
     average = calc_average(img, algorythm, autocontrast)
     if dither:
@@ -163,4 +163,4 @@ def iterate_image(img,dither,autocontrast,noempty,colorstyle):
         y_pos = y_pos + 4
 
 # Get your output!
-iterate_image(img,dither,autocontrast,noempty,colorstyle)
+iterate_image(img,original_img,dither,autocontrast,noempty,colorstyle)
