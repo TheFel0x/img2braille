@@ -82,7 +82,7 @@ def calc_average(img, algorythm, autocontrast):
 # Returns boolean representing the color of a pixel
 # Uses the average color value for this
 # Average color value is 
-def get_dot_value(pos, average):
+def get_dot_value(img,pos, average):
     px = img.getpixel(pos)
     if px[0]+px[1]+px[2] < average:
         return not inverted
@@ -91,23 +91,23 @@ def get_dot_value(pos, average):
 # Returns block (braille symbol) at the current position
 # Uses average to calculate the block
 # noempty replaces empty blocks with 1-dot blocks
-def block_from_cursor(pos,average,noempty):
+def block_from_cursor(img,pos,average,noempty):
     block_val = 0x2800
-    if get_dot_value(pos,average):
+    if get_dot_value(img,pos,average):
         block_val = block_val + 0x0001
-    if get_dot_value((pos[0]+1,pos[1]),average):
+    if get_dot_value(img,(pos[0]+1,pos[1]),average):
         block_val = block_val + 0x0008
-    if get_dot_value((pos[0],pos[1]+1),average):
+    if get_dot_value(img,(pos[0],pos[1]+1),average):
         block_val = block_val + 0x0002
-    if get_dot_value((pos[0]+1,pos[1]+1),average):
+    if get_dot_value(img,(pos[0]+1,pos[1]+1),average):
         block_val = block_val + 0x0010
-    if get_dot_value((pos[0],pos[1]+2),average):
+    if get_dot_value(img,(pos[0],pos[1]+2),average):
         block_val = block_val + 0x0004
-    if get_dot_value((pos[0]+1,pos[1]+2),average):
+    if get_dot_value(img,(pos[0]+1,pos[1]+2),average):
         block_val = block_val + 0x0020
-    if get_dot_value((pos[0],pos[1]+3),average):
+    if get_dot_value(img,(pos[0],pos[1]+3),average):
         block_val = block_val + 0x0040
-    if get_dot_value((pos[0]+1,pos[1]+3),average):
+    if get_dot_value(img,(pos[0]+1,pos[1]+3),average):
         block_val = block_val + 0x0080
     if noempty and block_val == 0x2800:
         block_val = 0x2801
@@ -115,7 +115,7 @@ def block_from_cursor(pos,average,noempty):
 
 # Gets the average original color value at the current position
 # output depends on the color style
-def color_average_at_cursor(pos,colorstyle):
+def color_average_at_cursor(original_img,pos,colorstyle):
     px = original_img.getpixel(pos)
     if colorstyle == "ansi":
         return "\x1b[48;2;{};{};{}m".format(px[0],px[1],px[2])
@@ -138,6 +138,7 @@ def iterate_image(img,dither,autocontrast,noempty,colorstyle):
     average = calc_average(img, algorythm, autocontrast)
     if dither:
         img = img.convert("1")
+        img = img.convert("RGB")
 
     y_size = img.size[1]
     x_size = img.size[0]
@@ -147,8 +148,8 @@ def iterate_image(img,dither,autocontrast,noempty,colorstyle):
     while y_pos < y_size-3:
         x_pos = 0
         while x_pos < x_size:
-            line = line + color_average_at_cursor((x_pos,y_pos),colorstyle)
-            line = line + block_from_cursor((x_pos,y_pos),average,noempty)
+            line = line + color_average_at_cursor(original_img,(x_pos,y_pos),colorstyle)
+            line = line + block_from_cursor(img,(x_pos,y_pos),average,noempty)
             if colorstyle == "html" or colorstyle == "htmlbg":
                 line = line + "</font>"
 
