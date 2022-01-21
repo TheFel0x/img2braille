@@ -8,7 +8,7 @@ Turns an Image into Braille Art. (Unicode Art / "ASCII Art" (its not rly ascii..
 |--|--|--|
 | `input` | string (path) | path to image file |
 | `-w` `--width` | integer | output width (characters) |
-| `-i` `--noinvert` | - | deactivates inverted colors. for light backgrounds with dark text |
+| `-i` `--noinvert` | - | deactivates inverted dots. for light backgrounds with dark text |
 | `-d` `--dither` | - | activates dithering |
 | `--calc` | `RGBsum` `R` `G` `B` `BW` | determines the way in which is checked wether a dot is black or white |
 | `-n` `--noempty` | - | don\'t use U+2800 "Braille pattern dots-0" |
