@@ -10,6 +10,7 @@ parser.add_argument("--calc", type=str,choices=["RGBsum","R","G","B","BW"],help=
 parser.add_argument("-n","--noempty",action='store_true',help='don\'t use U+2800 "Braille pattern dots-0" (can fix spacing problems))')
 parser.add_argument("-c","--color",type=str,choices=["none","ansi","ansifg","ansiall","html", "htmlbg", "htmlall"],help="adds color for html or ansi ascaped output")
 parser.add_argument("-a","--autocontrast",action='store_true',help="automatically adjusts contrast for the image")
+parser.add_argument("-b", "--blank", action='store_true',help="U+28FF everywhere. If all you want is the color output")
 
 # Arg Parsing
 args = parser.parse_args()
@@ -21,6 +22,7 @@ algorythm = args.calc if args.calc is not None else "RGBsum"
 noempty = args.noempty if args.noempty is not None else False
 colorstyle = args.color if args.color is not None else "none"
 autocontrast = args.autocontrast if args.autocontrast is not None else False
+blank = args.blank if args.blank is not None else False
 
 # Adjustment To Color Calculation
 # Takes an image and returns a new image with the same size
@@ -82,7 +84,9 @@ def get_dot_value(img,pos, average):
 # Returns block (braille symbol) at the current position
 # Uses average to calculate the block
 # noempty replaces empty blocks with 1-dot blocks
-def block_from_cursor(img,pos,average,noempty):
+def block_from_cursor(img,pos,average,noempty,blank):
+    if blank:
+        return chr(0x28FF)    
     block_val = 0x2800
     if get_dot_value(img,pos,average):
         block_val = block_val + 0x0001
@@ -124,8 +128,9 @@ def color_average_at_cursor(original_img,pos,colorstyle):
         return ""
 
 # Iterates over the image and does all the stuff
-def iterate_image(img,original_img,dither,autocontrast,noempty,colorstyle):
+def iterate_image(img,original_img,dither,autocontrast,noempty,colorstyle,blank):
     img = apply_algo(img,algorythm)
+    img = img.convert("RGB")
     average = calc_average(img, algorythm, autocontrast)
     if dither:
         img = img.convert("1")
@@ -140,7 +145,7 @@ def iterate_image(img,original_img,dither,autocontrast,noempty,colorstyle):
         x_pos = 0
         while x_pos < x_size:
             line = line + color_average_at_cursor(original_img,(x_pos,y_pos),colorstyle)
-            line = line + block_from_cursor(img,(x_pos,y_pos),average,noempty)
+            line = line + block_from_cursor(img,(x_pos,y_pos),average,noempty,blank)
             if colorstyle == "html" or colorstyle == "htmlbg":
                 line = line + "</font>"
 
@@ -163,4 +168,4 @@ if off_x + off_y > 0:
 original_img = img.copy()
 
 # Get your output!
-iterate_image(img,original_img,dither,autocontrast,noempty,colorstyle)
+iterate_image(img,original_img,dither,autocontrast,noempty,colorstyle,blank)
