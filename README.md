@@ -30,17 +30,29 @@ Turns an Image into Braille Art. (Unicode Art / "ASCII Art" (its not rly ascii..
 ![noinvert-braille](https://user-images.githubusercontent.com/43345523/124508619-9b196180-ddd0-11eb-9def-b906a5e534c4.png)
 
 ## How it works:
-- divide image into 2x4 blocks
-- calculate block value by adding [dot values](#Dot-values) to `0x2800`
-- create braille character by outputting block value as char (UTF-16)
+- divide image into 2x4 pixel blocks
+- calculate the blocks value by adding the [dot values](#Dot-values) to `0x2800`
+- create braille character by outputting the final block value as a char (UTF-16 encoded)
 
 ### Dot-values:
-|||
-|--|--|
-|+1|+8|
-|+2|+16|
-|+4|+32|
-|+64|+128|
+<table>
+  <tr>
+    <td> +1 </td>
+    <td> +8 </td>
+  </tr>
+  <tr>
+    <td> +2 </td>
+    <td> +16 </td>
+  </tr>
+  <tr>
+    <td> +4 </td>
+    <td> +32 </td>
+  </tr>
+  <tr>
+    <td> +64 </td>
+    <td> +128 </td>
+  </tr>
+</table> 
 
 For calculating which braille symbol represents a 2x4 pixel block.
 
