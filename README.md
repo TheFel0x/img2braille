@@ -54,7 +54,7 @@ Turns an Image into Braille Art. (Unicode Art / "ASCII Art" (its not rly ascii..
   </tr>
 </table> 
 
-For calculating which braille symbol represents a 2x4 pixel block.
+For calculating which braille symbol represents a 2x4 pixel block. The braille symbol works similar to an 8-bit binary number.
 
 ## TODO:
 - maybe edge detection filter?
