@@ -65,3 +65,4 @@ For calculating which braille symbol represents a 2x4 pixel block. The braille s
 - maybe IRC color option?
 - color palette support? maybe using https://github.com/hbldh/hitherdither ?
 - fix any bugs
+- aspect ratio option (braille chars are usually higher than wide, therefore the image should be stretched before being converted)
