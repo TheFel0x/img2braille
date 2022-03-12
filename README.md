@@ -3,6 +3,10 @@
 Turns an Image into Braille Art. (Unicode Art / "ASCII Art" (its not rly ascii...))
 (now also with color!)
 
+## Requires
+- [Python 3.x](https://www.python.org/)
+- [Pillow](https://pypi.org/project/Pillow/)
+
 ## Arguments
 |flag|value|description|
 |--|--|--|
