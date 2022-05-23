@@ -61,6 +61,7 @@ Turns an Image into Braille Art. (Unicode Art / "ASCII Art" (its not rly ascii..
 For calculating which braille symbol represents a 2x4 pixel block. The braille symbol works similar to an 8-bit binary number.
 
 ## TODO:
+- check if support for `U+1FB00` to `U+1FB3B` (Block Sextant) might be possible
 - maybe edge detection filter?
 - maybe IRC color option?
 - color palette support? maybe using https://github.com/hbldh/hitherdither ?
