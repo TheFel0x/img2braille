@@ -68,3 +68,4 @@ For calculating which braille symbol represents a 2x4 pixel block. The braille s
 - fix any bugs
 - aspect ratio option (braille chars are usually higher than wide, therefore the image should be stretched before being converted)
 - add installation instructions to this file
+- add requirements file
