@@ -1,11 +1,21 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/thefel0x/img2braille/badge/master)](https://www.codefactor.io/repository/github/thefel0x/img2braille/overview/master)
 # img2braille
-Turns an Image into Braille Art. (Unicode Art / "ASCII Art" (its not rly ascii...))
-(now also with color!)
+Turns an Image into Braille Art with [Pillow](https://python-pillow.org/). (...or Unicode Art ...or "ASCII Art" (its not rly ascii))
 
-## Requires
-- [Python 3.x](https://www.python.org/)
-- [Pillow](https://pypi.org/project/Pillow/)
+Supports color now!
+
+## Installation
+First make sure that you have [Python 3](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installation/) installed.
+In the terminal:
+```bash
+git clone https://github.com/TheFel0x/img2braille
+cd img2braille
+python -m pip install -r requirements.txt
+```
+Then to run the script:
+```bash
+python script.py --help
+```
 
 ## Arguments
 |flag|value|description|
@@ -59,19 +69,6 @@ Turns an Image into Braille Art. (Unicode Art / "ASCII Art" (its not rly ascii..
 </table> 
 
 For calculating which braille symbol represents a 2x4 pixel block. The braille symbol works similar to an 8-bit binary number.
-
-## Installation
-First make sure that you have Python 3 and pip installed.
-In the terminal:
-```bash
-git clone https://github.com/TheFel0x/img2braille
-cd img2braille
-python -m pip install -r requirements.txt
-```
-Then to run the script:
-```bash
-python script.py --help
-```
 
 ## TODO:
 - check if support for `U+1FB00` to `U+1FB3B` (Block Sextant) might be possible
