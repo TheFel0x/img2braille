@@ -60,6 +60,19 @@ Turns an Image into Braille Art. (Unicode Art / "ASCII Art" (its not rly ascii..
 
 For calculating which braille symbol represents a 2x4 pixel block. The braille symbol works similar to an 8-bit binary number.
 
+## Installation
+First make sure that you have Python 3 and pip installed.
+In the terminal:
+```bash
+git clone https://github.com/TheFel0x/img2braille
+cd img2braille
+python -m pip install -r requirements.txt
+```
+Then to run the script:
+```bash
+python script.py --help
+```
+
 ## TODO:
 - check if support for `U+1FB00` to `U+1FB3B` (Block Sextant) might be possible
 - maybe edge detection filter?
