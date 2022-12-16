@@ -57,7 +57,7 @@ parser.add_argument(
 args = parser.parse_args()
 imgpath = args.input
 new_width = args.width if args.width is not None else 200
-inverted = not args.noinvert if args.noinvert is not None else True 
+inverted = not args.noinvert if args.noinvert is not None else True
 dither = args.dither if args.dither is not None else False
 algorythm = args.calc if args.calc is not None else "RGBsum"
 noempty = args.noempty if args.noempty is not None else False
@@ -115,7 +115,7 @@ def calc_average(img, algorythm, autocontrast):
 
 # Returns boolean representing the color of a pixel
 # Uses the average color value for this
-# Average color value is 
+# Average color value is
 def get_dot_value(img, pos, average):
     px = img.getpixel(pos)
     if px[0] + px[1] + px[2] < average:
@@ -127,7 +127,7 @@ def get_dot_value(img, pos, average):
 # noempty replaces empty blocks with 1-dot blocks
 def block_from_cursor(img, pos, average, noempty, blank):
     if blank:
-        return chr(0x28FF)    
+        return chr(0x28FF)
     block_val = 0x2800
     if get_dot_value(img, pos, average):
         block_val = block_val + 0x0001
