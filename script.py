@@ -6,11 +6,13 @@ parser.add_argument("input", type=str, help="image file")
 parser.add_argument(
     "-w", "--width",
     type=int,
+    default=200,
     help="determines output width in number of chars"
 )
 parser.add_argument(
     "-i", "--noinvert",
-    action='store_true',
+    dest='invert',
+    action='store_false',
     help="don't invert colors (for bright backrounds with dark text)"
 )
 parser.add_argument(
@@ -25,6 +27,7 @@ parser.add_argument(
     "--calc",
     type=str,
     choices=["RGBsum", "R", "G", "B", "BW"],
+    default='RGBsum',
     help="determines color values used for calculating dot values (on/off) are calculated"
 )
 parser.add_argument(
@@ -36,6 +39,7 @@ parser.add_argument(
     "-c", "--color",
     type=str,
     choices=["none", "ansi", "ansifg", "ansiall", "html", "htmlbg", "htmlall"],
+    default='none',
     help="adds color for html or ansi ascaped output"
 )
 parser.add_argument(
@@ -55,15 +59,6 @@ parser.add_argument(
 
 # Arg Parsing
 args = parser.parse_args()
-imgpath = args.input
-new_width = args.width if args.width is not None else 200
-inverted = not args.noinvert if args.noinvert is not None else True
-dither = args.dither if args.dither is not None else False
-algorythm = args.calc if args.calc is not None else "RGBsum"
-noempty = args.noempty if args.noempty is not None else False
-colorstyle = args.color if args.color is not None else "none"
-autocontrast = args.autocontrast if args.autocontrast is not None else False
-blank = args.blank if args.blank is not None else False
 
 # Adjustment To Color Calculation
 # Takes an image and returns a new image with the same size
@@ -119,8 +114,8 @@ def calc_average(img, algorythm, autocontrast):
 def get_dot_value(img, pos, average):
     px = img.getpixel(pos)
     if px[0] + px[1] + px[2] < average:
-        return not inverted
-    return inverted
+        return not args.invert
+    return args.invert
 
 # Returns block (braille symbol) at the current position
 # Uses average to calculate the block
@@ -170,9 +165,9 @@ def color_average_at_cursor(original_img, pos, colorstyle):
 
 # Iterates over the image and does all the stuff
 def iterate_image(img, original_img, dither, autocontrast, noempty, colorstyle, blank):
-    img = apply_algo(img, algorythm)
+    img = apply_algo(img, args.calc)
     img = img.convert("RGB")
-    average = calc_average(img, algorythm, autocontrast)
+    average = calc_average(img, args.calc, autocontrast)
     if dither:
         img = img.convert("1")
     img = img.convert("RGB")
@@ -200,8 +195,8 @@ def iterate_image(img, original_img, dither, autocontrast, noempty, colorstyle, 
         y_pos = y_pos + 4
 
 # Image Initialization
-img = Image.open(imgpath)
-img = img.resize((new_width, round((new_width * img.size[1]) / img.size[0])))
+img = Image.open(args.input)
+img = img.resize((args.width, round((args.width * img.size[1]) / img.size[0])))
 off_x = (img.size[0] % 2)
 off_y = (img.size[1] % 4)
 if off_x + off_y > 0:
@@ -209,4 +204,4 @@ if off_x + off_y > 0:
 original_img = img.copy()
 
 # Get your output!
-iterate_image(img, original_img, dither, autocontrast, noempty, colorstyle, blank)
+iterate_image(img, original_img, args.dither, args.autocontrast, args.noempty, args.color, args.blank)
