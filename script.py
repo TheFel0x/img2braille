@@ -197,8 +197,8 @@ def iterate_image(img, original_img, dither, autocontrast, noempty, colorstyle, 
 # Image Initialization
 img = Image.open(args.input)
 img = img.resize((args.width, round((args.width * img.size[1]) / img.size[0])))
-off_x = (img.size[0] % 2)
-off_y = (img.size[1] % 4)
+off_x = img.size[0] % 2
+off_y = img.size[1] % 4
 if off_x + off_y > 0:
     img = img.resize((img.size[0] + off_x, img.size[1] + off_y))
 original_img = img.copy()
