@@ -182,14 +182,14 @@ def iterate_image(img, original_img, dither, autocontrast, noempty, colorstyle, 
         while x_pos < x_size:
             line = line + color_average_at_cursor(original_img, (x_pos, y_pos), colorstyle)
             line = line + block_from_cursor(img, (x_pos, y_pos), average, noempty, blank)
-            if colorstyle == "html" or colorstyle == "htmlbg":
+            if colorstyle in {"html", "htmlbg"}:
                 line = line + "</font>"
 
             x_pos = x_pos + 2
-        if colorstyle == "ansi" or colorstyle == "ansifg" or colorstyle == "ansiall":
+        if colorstyle in {"ansi", "ansifg", "ansiall"}:
             line = line + "\x1b[0m"
         print(line)
-        if colorstyle == "html" or colorstyle == "htmlbg" or colorstyle == "htmlall":
+        if colorstyle in {"html", "htmlbg", "htmlall"}:
             print("</br>")
         line = ''
         y_pos = y_pos + 4
