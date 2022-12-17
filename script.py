@@ -125,21 +125,21 @@ def block_from_cursor(img, pos, average, noempty, blank):
         return chr(0x28FF)
     block_val = 0x2800
     if get_dot_value(img, pos, average):
-        block_val = block_val + 0x0001
+        block_val += 0x0001
     if get_dot_value(img, (pos[0] + 1, pos[1]), average):
-        block_val = block_val + 0x0008
+        block_val += 0x0008
     if get_dot_value(img, (pos[0], pos[1] + 1), average):
-        block_val = block_val + 0x0002
+        block_val += 0x0002
     if get_dot_value(img, (pos[0] + 1, pos[1] + 1), average):
-        block_val = block_val + 0x0010
+        block_val += 0x0010
     if get_dot_value(img, (pos[0], pos[1] + 2), average):
-        block_val = block_val + 0x0004
+        block_val += 0x0004
     if get_dot_value(img, (pos[0] + 1, pos[1] + 2), average):
-        block_val = block_val + 0x0020
+        block_val += 0x0020
     if get_dot_value(img, (pos[0], pos[1] + 3), average):
-        block_val = block_val + 0x0040
+        block_val += 0x0040
     if get_dot_value(img, (pos[0] + 1, pos[1] + 3), average):
-        block_val = block_val + 0x0080
+        block_val += 0x0080
     if noempty and block_val == 0x2800:
         block_val = 0x2801
     return chr(block_val)
@@ -180,19 +180,19 @@ def iterate_image(img, original_img, dither, autocontrast, noempty, colorstyle, 
     while y_pos < y_size - 3:
         x_pos = 0
         while x_pos < x_size:
-            line = line + color_average_at_cursor(original_img, (x_pos, y_pos), colorstyle)
-            line = line + block_from_cursor(img, (x_pos, y_pos), average, noempty, blank)
+            line += color_average_at_cursor(original_img, (x_pos, y_pos), colorstyle)
+            line += block_from_cursor(img, (x_pos, y_pos), average, noempty, blank)
             if colorstyle in {"html", "htmlbg"}:
-                line = line + "</font>"
+                line += "</font>"
 
-            x_pos = x_pos + 2
+            x_pos += 2
         if colorstyle in {"ansi", "ansifg", "ansiall"}:
-            line = line + "\x1b[0m"
+            line += "\x1b[0m"
         print(line)
         if colorstyle in {"html", "htmlbg", "htmlall"}:
             print("</br>")
         line = ''
-        y_pos = y_pos + 4
+        y_pos += 4
 
 # Image Initialization
 img = Image.open(args.input)
