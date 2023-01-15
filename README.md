@@ -71,11 +71,10 @@ python script.py --help
 For calculating which braille symbol represents a 2x4 pixel block. The braille symbol works similar to an 8-bit binary number.
 
 ## TODO:
+- support for different dithering algorithms
+- fix any bugs
 - check if support for `U+1FB00` to `U+1FB3B` (Block Sextant) might be possible
 - maybe edge detection filter?
 - maybe IRC color option?
 - color palette support? maybe using https://github.com/hbldh/hitherdither ?
-- fix any bugs
 - adjust-aspect-ratio option (for non-monospace fonts that mess up the aspect ration of the output)
-- add installation instructions to this file
-- add requirements file
