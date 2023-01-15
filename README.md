@@ -1,4 +1,4 @@
-[![CodeFactor](https://www.codefactor.io/repository/github/thefel0x/img2braille/badge/master)](https://www.codefactor.io/repository/github/thefel0x/img2braille/overview/master)
+[![CodeFactor](https://www.codefactor.io/repository/github/thefel0x/img2braille/badge/main)](https://www.codefactor.io/repository/github/thefel0x/img2braille/overview/main)
 # img2braille
 Turns an Image into Braille Art with [Pillow](https://python-pillow.org/). (...or Unicode Art ...or "ASCII Art" (its not rly ascii))
 
