@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=66.0.0", "setuptools-scm>=7.1.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "img2braille"
+authors = [
+    {name = "", email = ""},  # TODO: Please fill this in
+]
+description = "Turns images into Unicode Braille art."
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["image", "braille", "ascii", "art", "ascii-art"]
+license = {file = "LICENSE"}
+classifiers = [
+    # TODO: Please choose one of:
+    # "Development Status :: 1 - Planning",
+    # "Development Status :: 2 - Pre-Alpha",
+    # "Development Status :: 3 - Alpha",
+    # "Development Status :: 4 - Beta",
+    # "Development Status :: 5 - Production/Stable",
+    # "Development Status :: 6 - Mature",
+    # "Development Status :: 7 - Inactive",
+    "Programming Language :: Python :: 3",
+    "Environment :: Console",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "Pillow>=9.4.0",
+]
+dynamic = ["version"]
+
+[project.entry-points]
+img2braille = "img2braille.main:main"
