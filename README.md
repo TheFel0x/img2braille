@@ -73,6 +73,7 @@ For calculating which braille symbol represents a 2x4 pixel block. The braille s
 ## TODO:
 - support for different dithering algorithms
 - fix any bugs
+- support 3,4 and 8 bit ANSI color mode
 - check if support for `U+1FB00` to `U+1FB3B` (Block Sextant) might be possible
 - maybe edge detection filter?
 - maybe IRC color option?
