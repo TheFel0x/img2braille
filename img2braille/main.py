@@ -65,6 +65,6 @@ def parse_args() -> Namespace:
     )
 
     # TODO: add "--algorithm" flag; support dithering algorithms: bayer matrix, floyd-steinberg, threshold, etc.
-    #   note: default should be threshold? maybe something nicer looking instead.
+    # note: default should be threshold? maybe something nicer looking instead.
 
     return parser.parse_args()
