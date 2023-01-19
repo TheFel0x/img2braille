@@ -1,14 +1,14 @@
-from enum import Enum, auto
+from enum import Enum
 
 from PIL.Image import Image
 
 
 class Algo(Enum):
-    RGB_SUM = auto()
-    R = auto()
-    G = auto()
-    B = auto()
-    BW = auto()
+    RGB_SUM = 'RGBsum'
+    R = 'R'
+    G = 'G'
+    B = 'B'
+    BW = 'BW'
 
 
 def apply_algo(img: Image, algo: Algo) -> Image:
