@@ -1,4 +1,4 @@
-from PIL import Image
+
 
 # Adjustment To Color Calculation
 # Takes an image and returns a new image with the same size
@@ -8,21 +8,6 @@ def adjust_to_color(img, pos):
         for x in range(img.size[0]):
             val = img.getpixel((x, y))[pos]
             img.putpixel((x, y), (val, val, val))
-    return img
-
-# Applies chosen color mode to the image
-def apply_algo(img, algo):
-    if algo == "RGBsum":
-        img = img.convert("RGB")
-    elif algo == "R":
-        img = adjust_to_color(img, 0)
-    elif algo == "G":
-        img = adjust_to_color(img, 1)
-    elif algo == "B":
-        img = adjust_to_color(img, 2)
-    elif algo == "BW":
-        # TODO: check if this actually works with black/white images
-        img = img.convert("RGB")
     return img
 
 # Average Calculation
@@ -102,46 +87,3 @@ def color_average_at_cursor(original_img, pos, colorstyle):
         return "<font style=\"color:#{:02x}{:02x}{:02x};background-color:#{:02x}{:02x}{:02x}\">".format(px[0], px[1], px[2], px[0], px[1], px[2])
     else:
         return ""
-
-# Iterates over the image and does all the stuff
-def iterate_image(img, original_img, dither, autocontrast, noempty, colorstyle, blank):
-    img = apply_algo(img, args.calc)
-    img = img.convert("RGB")
-    average = calc_average(img, args.calc, autocontrast)
-    if dither:
-        img = img.convert("1")
-    img = img.convert("RGB")
-
-    y_size = img.size[1]
-    x_size = img.size[0]
-    y_pos = 0
-    x_pos = 0
-    line = ''
-    while y_pos < y_size - 3:
-        x_pos = 0
-        while x_pos < x_size:
-            line += color_average_at_cursor(original_img, (x_pos, y_pos), colorstyle)
-            line += block_from_cursor(img, (x_pos, y_pos), average, noempty, blank)
-            if colorstyle in {"html", "htmlbg"}:
-                line += "</font>"
-
-            x_pos += 2
-        if colorstyle in {"ansi", "ansifg", "ansiall"}:
-            line += "\x1b[0m"
-        print(line)
-        if colorstyle in {"html", "htmlbg", "htmlall"}:
-            print("</br>")
-        line = ''
-        y_pos += 4
-
-# Image Initialization
-img = Image.open(args.input)
-img = img.resize((args.width, round((args.width * img.size[1]) / img.size[0])))
-off_x = img.size[0] % 2
-off_y = img.size[1] % 4
-if off_x + off_y > 0:
-    img = img.resize((img.size[0] + off_x, img.size[1] + off_y))
-original_img = img.copy()
-
-# Get your output!
-iterate_image(img, original_img, args.dither, args.autocontrast, args.noempty, args.color, args.blank)

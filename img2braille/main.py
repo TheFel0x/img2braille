@@ -1,9 +1,51 @@
 from argparse import ArgumentParser, Namespace
 
+from PIL.Image import open as img_open
+
 
 def main() -> int:
     args = parse_args()
-    # TODO
+
+    # TODO: simplify and split
+
+    img = img_open(args.input)
+    img = img.resize((args.width, round((args.width * img.size[1]) / img.size[0])))
+    off_x = img.size[0] % 2
+    off_y = img.size[1] % 4
+    if off_x + off_y > 0:
+        img = img.resize((img.size[0] + off_x, img.size[1] + off_y))
+    original_img = img.copy()
+
+    img = apply_algo(img, args.calc)
+    img = img.convert("RGB")
+    average = calc_average(img, args.calc, args.autocontrast)
+    if args.dither:
+        img = img.convert("1")
+    img = img.convert("RGB")
+
+    y_size = img.size[1]
+    x_size = img.size[0]
+    y_pos = 0
+    x_pos = 0
+    line = ''
+    while y_pos < y_size - 3:
+        x_pos = 0
+        while x_pos < x_size:
+            line += color_average_at_cursor(original_img, (x_pos, y_pos), args.color)
+            line += block_from_cursor(img, (x_pos, y_pos), average, args.noempty, args.blank)
+            if args.color in {"html", "htmlbg"}:
+                line += "</font>"
+
+            x_pos += 2
+        if args.color in {"ansi", "ansifg", "ansiall"}:
+            line += "\x1b[0m"
+        print(line)
+        if args.color in {"html", "htmlbg", "htmlall"}:
+            print("</br>")
+        line = ''
+        y_pos += 4
+
+    return 0
 
 
 def parse_args() -> Namespace:
