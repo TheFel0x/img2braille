@@ -1,15 +1,3 @@
-
-
-# Adjustment To Color Calculation
-# Takes an image and returns a new image with the same size
-# The new image only uses either the R, G or B values of the original image
-def adjust_to_color(img, pos):
-    for y in range(img.size[1]):
-        for x in range(img.size[0]):
-            val = img.getpixel((x, y))[pos]
-            img.putpixel((x, y), (val, val, val))
-    return img
-
 # Average Calculation
 # Takes an image and returns the averade color value
 def calc_average(img, algorythm, autocontrast):
