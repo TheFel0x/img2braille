@@ -2,6 +2,8 @@ from argparse import ArgumentParser, Namespace
 
 from PIL.Image import open as img_open
 
+from .algo import apply_algo, Algo
+
 
 def main() -> int:
     args = parse_args()
@@ -16,7 +18,7 @@ def main() -> int:
         img = img.resize((img.size[0] + off_x, img.size[1] + off_y))
     original_img = img.copy()
 
-    img = apply_algo(img, args.calc)
+    img = apply_algo(img, Algo[args.calc])
     img = img.convert("RGB")
     average = calc_average(img, args.calc, args.autocontrast)
     if args.dither:
