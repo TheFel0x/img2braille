@@ -1,19 +1,19 @@
 # Average Calculation
 # Takes an image and returns the averade color value
-def calc_average(img, algorithm, autocontrast):
+def calc_average(img, algo, autocontrast):
     if autocontrast:
         average = 0
         for y in range(img.size[1]):
             for x in range(img.size[0]):
-                if algorithm == "RGBsum":
+                if algo == "RGBsum":
                     average += img.getpixel((x, y))[0] + img.getpixel((x, y))[1] + img.getpixel((x, y))[2]
-                elif algorithm == "R":
+                elif algo == "R":
                     average = img.getpixel((x, y))[0]
-                elif algorithm == "G":
+                elif algo == "G":
                     average = img.getpixel((x, y))[1]
-                elif algorithm == "B":
+                elif algo == "B":
                     average = img.getpixel((x, y))[2]
-                elif algorithm == "BW":
+                elif algo == "BW":
                     average = img.getpixel((x, y))
                 else:
                     average += img.getpixel((x, y))[0] + img.getpixel((x, y))[1] + img.getpixel((x, y))[2]
