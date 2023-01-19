@@ -74,8 +74,8 @@ def parse_args() -> Namespace:
         help="use dithering (recommended)",
     )
     # TODO: rename "--calc" to "--filter"; choices: R, G, B, <none> ; description: "uses the specified channel. combines R, G and B channel if not specified. doesn't apply to images with 1 channel"
-    #   note: unsure how images should be handled that have 2 or more than 3 channels, unsure what to do with alpha channel
-    #   adjust related functions
+    # note: unsure how images should be handled that have 2 or more than 3 channels, unsure what to do with alpha channel
+    #       adjust related functions
     parser.add_argument(
         "--calc",
         type=str,
