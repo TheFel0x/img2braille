@@ -25,8 +25,8 @@ python script.py --help
 | `-i` `--noinvert` | - | deactivates inverted dots. for light backgrounds with dark text |
 | `-d` `--dither` | - | activates dithering |
 | `--calc` | `RGBsum` `R` `G` `B` `BW` | determines the way in which is checked wether a dot is black or white |
-| `-n` `--noempty` | - | don\'t use U+2800 "Braille pattern dots-0" |
-| `-c` `--color` | `none` `ansi` `html` `htmlbg` `htmlall` | color support for either HTML style with font tags or ANSI escaped for cli use (html also puts br tags at the end of each line) htmlbg colors the background instead of the characters and all colors both |
+| `-n` `--noempty` | - | don\'t use U+2800 "Braille pattern dots-0" (some applications remove these symbols because they treat them as spaces) |
+| `-c` `--color` | `none` `ansi` `ansifg` `ansiall` `html` `htmlbg` `htmlall` | color support for either HTML style with font tags or ANSI escaped for cli use (html also puts br tags at the end of each line) htmlbg colors the background instead of the characters and all colors both |
 | `-a` `--autocontrast` | - | enables autocontrast, to automatically adjust black and white values for calculations to the images max/min (recommended for black/white use) |
 | `-b` `--blank` | - | all braille blocks are "full" blocks, in case you only care about the color output and not about the braille pattern | 
 
@@ -69,6 +69,10 @@ python script.py --help
 </table> 
 
 For calculating which braille symbol represents a 2x4 pixel block. The braille symbol works similar to an 8-bit binary number.
+
+## How do I save output?
+Using the `>` operator, like this:
+`python script.py 'lain.png' > output.txt`
 
 ## TODO:
 - support for different dithering algorithms
