@@ -10,7 +10,7 @@ authors = [
 description = "Turns images into Unicode Braille art."
 readme = "README.md"
 requires-python = ">=3.7"
-keywords = ["image", "braille", "ascii", "art", "ascii-art"]
+keywords = ["img2braille", "image", "braille", "img", "ascii", "art", "ascii-art"]
 license = {file = "LICENSE"}
 classifiers = [
     # TODO: Please choose one of:
