@@ -148,6 +148,10 @@ def block_from_cursor(img, pos, average, noempty, blank):
 # output depends on the color style
 def color_average_at_cursor(original_img, pos, colorstyle):
     px = original_img.getpixel(pos)
+        
+    if isinstance(px, int):
+        px = (px, px, px)
+        
     if colorstyle == "ansi":
         return "\x1b[48;2;{};{};{}m".format(px[0], px[1], px[2])
     elif colorstyle == "ansifg":
