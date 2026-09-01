@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "img2braille"
+version = "0.0.1"
+description = "Turns image into Unicode Braille art."
+readme = "README.md"
+requires-python = ">=3.8"
+license = "GPL-3.0-only"
+keywords = [
+  "art",
+  "unicode",
+  "image-processing",
+  "ascii-art",
+  "unicode-characters",
+  "braille-characters",
+  "utf-16",
+  "unicode-art",
+  "braille-art",
+]
+authors = [
+  { name = "TheFel0x", email = "dev.thefel0x@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "Pillow>=6.2.1",
+]
+
+[project.urls]
+Documentation = "https://github.com/TheFel0x/img2braille#readme"
+Issues = "https://github.com/TheFel0x/img2braille/issues"
+Source = "https://github.com/TheFel0x/img2braille"
+
+[project.scripts]
+img2braille = "img2braille:main"

@@ -205,3 +205,5 @@ original_img = img.copy()
 
 # Get your output!
 iterate_image(img, original_img, args.dither, args.autocontrast, args.noempty, args.color, args.blank)
+
+main = lambda: 0  # Dummy entry point for project.scripts

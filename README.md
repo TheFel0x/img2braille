@@ -14,7 +14,7 @@ python -m pip install -r requirements.txt
 ```
 Then to run the script:
 ```bash
-python script.py --help
+python img2braille.py --help
 ```
 
 ## Arguments
@@ -31,16 +31,16 @@ python script.py --help
 | `-b` `--blank` | - | all braille blocks are "full" blocks, in case you only care about the color output and not about the braille pattern | 
 
 ## Examples
-`python script.py 'lain.png' --color ansi --dither --noempty`
+`python img2braille.py 'lain.png' --color ansi --dither --noempty`
 ![image](https://user-images.githubusercontent.com/43345523/143688036-d10ab9b1-4b15-46ac-8796-b80644034d43.png)
 
-`python script.py 'lain.png' --dither`
+`python img2braille.py 'lain.png' --dither`
 ![dither-braille](https://user-images.githubusercontent.com/43345523/124508661-af5d5e80-ddd0-11eb-82cc-256bace864df.png)
 
-`python script.py 'lain.png'`
+`python img2braille.py 'lain.png'`
 ![default-braille](https://user-images.githubusercontent.com/43345523/124508597-8fc63600-ddd0-11eb-93d9-3ede4d521f3b.png)
 
-`python script.py 'lain.png' --noinvert`
+`python img2braille.py 'lain.png' --noinvert`
 ![noinvert-braille](https://user-images.githubusercontent.com/43345523/124508619-9b196180-ddd0-11eb-9def-b906a5e534c4.png)
 
 ## How it works:
@@ -72,7 +72,7 @@ For calculating which braille symbol represents a 2x4 pixel block. The braille s
 
 ## How do I save output?
 Using the `>` operator, like this:
-`python script.py 'lain.png' > output.txt`
+`python img2braille.py 'lain.png' > output.txt`
 
 ## TODO:
 - support for different dithering algorithms
