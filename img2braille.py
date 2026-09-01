@@ -57,9 +57,6 @@ parser.add_argument(
 #   note: default should be threshold? maybe something nicer looking instead.
 
 
-# Arg Parsing
-args = parser.parse_args()
-
 # Adjustment To Color Calculation
 # Takes an image and returns a new image with the same size
 # The new image only uses either the R, G or B values of the original image
@@ -194,16 +191,20 @@ def iterate_image(img, original_img, dither, autocontrast, noempty, colorstyle, 
         line = ''
         y_pos += 4
 
-# Image Initialization
-img = Image.open(args.input)
-img = img.resize((args.width, round((args.width * img.size[1]) / img.size[0])))
-off_x = img.size[0] % 2
-off_y = img.size[1] % 4
-if off_x + off_y > 0:
-    img = img.resize((img.size[0] + off_x, img.size[1] + off_y))
-original_img = img.copy()
+def main():
+    global args
+    args = parser.parse_args()
 
-# Get your output!
-iterate_image(img, original_img, args.dither, args.autocontrast, args.noempty, args.color, args.blank)
+    img = Image.open(args.input)
+    img = img.resize((args.width, round((args.width * img.size[1]) / img.size[0])))
+    off_x = img.size[0] % 2
+    off_y = img.size[1] % 4
+    if off_x + off_y > 0:
+        img = img.resize((img.size[0] + off_x, img.size[1] + off_y))
+    original_img = img.copy()
 
-main = lambda: 0  # Dummy entry point for project.scripts
+    iterate_image(img, original_img, args.dither, args.autocontrast, args.noempty, args.color, args.blank)
+
+
+if __name__ == "__main__":
+    main()
