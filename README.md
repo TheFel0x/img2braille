@@ -5,8 +5,16 @@ Turns an Image into Braille Art with [Pillow](https://python-pillow.org/). (...o
 Supports color now!
 
 ## Installation
+
 First make sure that you have [Python 3](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installation/) installed.
-In the terminal:
+
+You can install this directly from GitHub via pip:
+```bash
+python -m pip install git+https://github.com/TheFel0x/img2braille.git
+img2braille --help
+```
+
+Alternatively, you can do this manually via the following method:
 ```bash
 git clone https://github.com/TheFel0x/img2braille
 cd img2braille
