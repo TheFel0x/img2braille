@@ -195,7 +195,10 @@ def main():
     global args
     args = parser.parse_args()
 
-    img = Image.open(args.input)
+    try:
+        img = Image.open(args.input)
+    except FileNotFoundError:
+        parser.error(f"image file not found: {args.input}")
     img = img.resize((args.width, round((args.width * img.size[1]) / img.size[0])))
     off_x = img.size[0] % 2
     off_y = img.size[1] % 4
